@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.ldap.user-search-base",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ldap.user-search-base'"
+  },
+  {
+    "name": "spring.ldap.user-search-filter",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ldap.user-search-filter'"
+  }
+]}

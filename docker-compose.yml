@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:16
-    container_name: postgres_certificado
+    container_name: postgresDB
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -18,10 +18,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    profiles: ["dev"]
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin4_certificado
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
@@ -34,13 +35,15 @@ services:
     restart: always
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+    profiles: ["dev"]
 
   app-dev:
     image: maven:3.9.6-eclipse-temurin-21
-    container_name: spring_certificado_dev
+    container_name: backend-dev
     working_dir: /app
-    command: mvn spring-boot:run
+    command: sh -c "mvn install -DskipTests && java -jar target/*.jar"
     environment:
+      SPRING_PROFILES_ACTIVE: dev
       SPRING_URL: ${SPRING_URL}
       SPRING_USERNAME: ${SPRING_USERNAME}
       SPRING_PASSWORD: ${SPRING_PASSWORD}
@@ -59,11 +62,17 @@ services:
 
   app:
     build: .
-    container_name: spring_certificado
+    container_name: backend-prod
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_URL: ${SPRING_URL}
       SPRING_USERNAME: ${SPRING_USERNAME}
       SPRING_PASSWORD: ${SPRING_PASSWORD}
+
+      LDAP_URLS: ${LDAP_URLS}
+      LDAP_BASE_DN: ${LDAP_BASE_DN}
+      LDAP_MANAGER_DN: ${LDAP_MANAGER_DN}
+      LDAP_MANAGER_PASSWORD: ${LDAP_MANAGER_PASSWORD}
     depends_on:
       - db
     restart: always
@@ -72,6 +81,21 @@ services:
     ports:
       - "8080:8080"
     profiles: ["prod"]
+
+  frontend:
+    image: node:20-alpine
+    container_name: front-login-dev
+    working_dir: /app
+    volumes:
+      - ../certificadoapi-front-login:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - certificadonm-network
+    depends_on:
+      - app-dev
+    profiles: ["dev"]
 
 networks:
   certificadonm-network:
