@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${SPRING_URL}
+    username: ${SPRING_USERNAME}
+    password: ${SPRING_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mvc:
+    format:
+      date: dd/MM/yyyy
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+
+ 
