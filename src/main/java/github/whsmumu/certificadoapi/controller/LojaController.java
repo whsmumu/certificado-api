@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -34,10 +35,9 @@ public class LojaController {
     private final LojaService lojaService;
     private final LojaMapper lojaMapper;
 
-
     @PostMapping
     public ResponseEntity<LojaResponseDTO> criarLoja(@RequestBody @Valid LojaRequestDTO lojaRequestDTO) {
-       
+
         Loja lojaEntity = lojaMapper.toEntity(lojaRequestDTO);
         lojaEntity = lojaService.saveOrUpdate(lojaEntity);
 
@@ -47,17 +47,17 @@ public class LojaController {
                 .toUri();
 
         return ResponseEntity.created(uri).body(lojaMapper.toDTO(lojaEntity));
-       
+
     }
 
     @GetMapping()
-    public ResponseEntity <List<LojaResponseDTO>> listarLojas() {
+    public ResponseEntity<List<LojaResponseDTO>> listarLojas() {
         List<Loja> lojas = lojaService.findAll();
         List<LojaResponseDTO> lojaResponse = lojas.stream()
                 .map(lojaMapper::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(lojaResponse);
-  
+
     }
 
     @GetMapping("/{id}")
@@ -74,11 +74,18 @@ public class LojaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LojaResponseDTO> atualizarLoja(@PathVariable UUID id, @RequestBody @Valid LojaRequestDTO lojaRequestDTO) {
+    public ResponseEntity<LojaResponseDTO> atualizarLoja(@PathVariable UUID id,
+            @RequestBody @Valid LojaRequestDTO lojaRequestDTO) {
         Loja lojaEntity = lojaMapper.toEntity(lojaRequestDTO);
         lojaEntity.setId(id);
         Loja lojaSalva = lojaService.saveOrUpdate(lojaEntity);
-        
+
         return ResponseEntity.status(HttpStatus.OK).body(lojaMapper.toDTO(lojaSalva));
+    }
+
+    @PatchMapping("/{id}/iniciar-instalacao")
+    public ResponseEntity<LojaResponseDTO> iniciarInstalacao(@PathVariable UUID id) {
+        Loja lojaAtualizada = lojaService.iniciarInstalacao(id);
+        return ResponseEntity.ok(lojaMapper.toDTO(lojaAtualizada));
     }
 }

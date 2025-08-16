@@ -55,8 +55,9 @@ public class LojaService {
         lojaRepository.deleteById(id);
     }
 
-    private void calcularEdefinirStatusPrazo(Loja loja){
-        if (loja.getPrazoExpiracaoCertificado().isBefore(LocalDate.now()) || loja.getPrazoExpiracaoCertificado() == null) {
+    private void calcularEdefinirStatusPrazo(Loja loja) {
+        if (loja.getPrazoExpiracaoCertificado().isBefore(LocalDate.now())
+                || loja.getPrazoExpiracaoCertificado() == null) {
             throw new IllegalArgumentException("Deve inserir data de expiração valida para o certificado!");
         }
 
@@ -75,7 +76,9 @@ public class LojaService {
     }
 
     private void definirResultadoDoProcesso(Loja loja) {
-        if (loja.getLojaEnviado() == StatusNotificacao.ENVIADO && loja.getCertificadoRecebido() == StatusNotificacao.RECEBIDO && loja.getEnviadoFiscal() == StatusNotificacao.ENVIADO) {
+        if (loja.getLojaEnviado() == StatusNotificacao.ENVIADO
+                && loja.getCertificadoRecebido() == StatusNotificacao.RECEBIDO
+                && loja.getEnviadoFiscal() == StatusNotificacao.ENVIADO) {
             loja.setResultadoProcesso(StatusNotificacao.CONCLUIDO);
             loja.setPrazoCertificado(StatusPrazo.CONCLUIDO);
         } else {
@@ -90,6 +93,35 @@ public class LojaService {
         lojaExistente.setLojaEnviado(lojaDadosNovos.getLojaEnviado());
         lojaExistente.setCertificadoRecebido(lojaDadosNovos.getCertificadoRecebido());
         lojaExistente.setEnviadoFiscal(lojaDadosNovos.getEnviadoFiscal());
-        
+
+    }
+
+    public Loja iniciarInstalacao(UUID id) {
+        Loja loja = lojaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loja com ID " + id + " não encontrada."));
+
+        loja.setResultadoProcesso(StatusNotificacao.EM_ANDAMENTO);
+        lojaRepository.save(loja);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+
+                Loja lojaProcessada = lojaRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Loja desapareceu durante o processamento."));
+                ;
+
+                lojaProcessada.setResultadoProcesso(StatusNotificacao.CONCLUIDO);
+                lojaRepository.save(lojaProcessada);
+
+            } catch (InterruptedException e) {
+                Loja lojaComFalha = lojaRepository.findById(id).get();
+                lojaComFalha.setResultadoProcesso(StatusNotificacao.FALHA);
+                lojaRepository.save(lojaComFalha);
+                Thread.currentThread().interrupt();
+            }
+        }).start();
+
+        return loja;
     }
 }

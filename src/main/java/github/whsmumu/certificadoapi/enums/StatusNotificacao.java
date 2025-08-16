@@ -5,5 +5,7 @@ public enum StatusNotificacao {
     ENVIADO,
     PENDENTE,
     CONCLUIDO,
-    RECEBIDO
+    RECEBIDO,
+    EM_ANDAMENTO,
+    FALHA
 }

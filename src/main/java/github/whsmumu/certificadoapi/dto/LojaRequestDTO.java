@@ -16,7 +16,7 @@ public record LojaRequestDTO(
     @NotBlank(message = "O código da loja é obrigatório")
     String codigoLoja,
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "O prazo de expiração do certificado é obrigatório")
     LocalDate prazoExpiracaoCertificado,
 

@@ -12,7 +12,7 @@ public record LojaResponseDTO(
     String nomeLoja,
     String codigoLoja,
     
-    @DateTimeFormat(style = "dd/mm/yyyy")
+    @DateTimeFormat(style = "yyy-MM-dd")
     LocalDate prazoExpiracaoCertificado,
 
     StatusNotificacao lojaEnviado,
