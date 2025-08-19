@@ -1,6 +1,7 @@
 package github.whsmumu.certificadoapi.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -8,14 +9,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import github.whsmumu.certificadoapi.enums.StatusNotificacao;
 import github.whsmumu.certificadoapi.enums.StatusPrazo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -64,6 +68,9 @@ public class Loja {
 
     @CreatedDate
     private LocalDate dataCadastro;
+
+    @OneToMany(mappedBy = "loja", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Historico> historicos;
 
 
 }

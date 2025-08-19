@@ -66,7 +66,7 @@ public class LojaService {
 
         long diasParaExpiracao = ChronoUnit.DAYS.between(dataHoje, dataExpiracaoCertificado);
 
-        if (diasParaExpiracao <= 0) {
+        if (diasParaExpiracao < 0) {
             loja.setPrazoCertificado(StatusPrazo.EXPIRADO);
         } else if (diasParaExpiracao <= 30) {
             loja.setPrazoCertificado(StatusPrazo.PROXIMO_AO_VENCIMENTO);
@@ -94,34 +94,5 @@ public class LojaService {
         lojaExistente.setCertificadoRecebido(lojaDadosNovos.getCertificadoRecebido());
         lojaExistente.setEnviadoFiscal(lojaDadosNovos.getEnviadoFiscal());
 
-    }
-
-    public Loja iniciarInstalacao(UUID id) {
-        Loja loja = lojaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Loja com ID " + id + " não encontrada."));
-
-        loja.setResultadoProcesso(StatusNotificacao.EM_ANDAMENTO);
-        lojaRepository.save(loja);
-
-        new Thread(() -> {
-            try {
-                Thread.sleep(5000);
-
-                Loja lojaProcessada = lojaRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Loja desapareceu durante o processamento."));
-                ;
-
-                lojaProcessada.setResultadoProcesso(StatusNotificacao.CONCLUIDO);
-                lojaRepository.save(lojaProcessada);
-
-            } catch (InterruptedException e) {
-                Loja lojaComFalha = lojaRepository.findById(id).get();
-                lojaComFalha.setResultadoProcesso(StatusNotificacao.FALHA);
-                lojaRepository.save(lojaComFalha);
-                Thread.currentThread().interrupt();
-            }
-        }).start();
-
-        return loja;
     }
 }
