@@ -1,5 +1,6 @@
 package github.whsmumu.certificadoapi.validator;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -20,8 +21,7 @@ public class HistoricoValidator {
     }
 
     private void validateDataFutura(Historico historico) {
-        Optional<Historico> historicoData = historicoRepository.findByDataInstalacao(historico.getDataInstalacao());
-        if (historicoData.isPresent()) {
+        if (historico.getDataInstalacao().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("A data de instalação não pode ser futura.");
         }
     }
