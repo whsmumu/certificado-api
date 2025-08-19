@@ -56,7 +56,6 @@ public class LojaController {
                 .map(lojaMapper::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(lojaResponse);
-
     }
 
     @GetMapping("/{id}")

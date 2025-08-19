@@ -21,7 +21,7 @@ public class HistoricoValidator {
     }
 
     private void validateDataFutura(Historico historico) {
-        if (historico.getDataInstalacao().isAfter(LocalDate.now())) {
+        if (historico.getDataInstalacao().isAfter(LocalDate.now()) && historico.getDataInstalacao() != null) {
             throw new IllegalArgumentException("A data de instalação não pode ser futura.");
         }
     }

@@ -11,7 +11,7 @@ import github.whsmumu.certificadoapi.model.Historico;
 public interface HistoricoMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "loja", ignore = true)
+    @Mapping(target = "loja.id", source = "idLoja")
     Historico toEntity(HistoricoRequestDTO historicoRequestDTO);
 
     HistoricoResponseDTO toDTO(Historico historico);

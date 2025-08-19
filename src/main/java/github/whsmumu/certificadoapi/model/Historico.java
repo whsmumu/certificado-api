@@ -24,7 +24,15 @@ public class Historico {
     @Column(nullable = false)
     private String tecnicoResponsavel;
 
+    @ElementCollection
+    @CollectionTable(name = "acompanhantes", joinColumns = @JoinColumn(name = "historico_id"))
+    @Column(name = "acompanhantes")
     private List<String> acompanhantes;
+
+    @ElementCollection
+    @CollectionTable(name = "historico_sistemas", joinColumns = @JoinColumn(name = "historico_id"))
+    @Column(name = "sistema")
+    private List<String> sistemasParaInstalarCertificado;
 
     @Column(nullable = false)
     private LocalDate dataInstalacao;
@@ -33,11 +41,11 @@ public class Historico {
     @Enumerated(EnumType.STRING)
     private StatusNotificacao statusInstalacao;
 
-    private List<String> sistemasParaInstalarCertificado;
-
     @ManyToOne
     @JoinColumn(name = "loja_id")
     private Loja loja;
+
+    private UUID idLoja;
 
  
 }

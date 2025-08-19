@@ -22,10 +22,12 @@ public class LojaService {
     private final LojaRepository lojaRepository;
     private final LojaValidator lojaValidator;
 
+    @Transactional(readOnly = true)
     public List<Loja> findAll() {
         return lojaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Loja findById(UUID id) {
         return lojaRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Loja não encontrada com o ID: " + id));

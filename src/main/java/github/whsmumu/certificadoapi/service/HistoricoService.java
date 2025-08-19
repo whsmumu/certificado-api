@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import github.whsmumu.certificadoapi.model.Historico;
 import github.whsmumu.certificadoapi.repository.HistoricoRepository;
 import github.whsmumu.certificadoapi.validator.HistoricoValidator;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,10 +19,12 @@ public class HistoricoService {
     private final HistoricoRepository historicoRepository;
     private final HistoricoValidator historicoValidator;
 
+    @Transactional(readOnly = true)
     public List<Historico> findAll(){
         return historicoRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Historico findById(UUID id){
         return historicoRepository.findById(id)
             .orElseThrow(() -> new NoSuchElementException("Historico não encontrado"));
