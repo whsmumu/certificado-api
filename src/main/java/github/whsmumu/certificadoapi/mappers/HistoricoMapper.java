@@ -14,6 +14,7 @@ public interface HistoricoMapper {
     @Mapping(target = "loja.id", source = "idLoja")
     Historico toEntity(HistoricoRequestDTO historicoRequestDTO);
 
+    @Mapping(target = "idLoja", source = "loja.id")
     HistoricoResponseDTO toDTO(Historico historico);
 
 }

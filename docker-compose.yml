@@ -41,7 +41,7 @@ services:
     image: maven:3.9.6-eclipse-temurin-21
     container_name: backend-dev
     working_dir: /app
-    command: sh -c "mvn install -DskipTests && java -jar target/*.jar"
+    command: sh -c "mvn spring-boot:run"
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_URL: ${SPRING_URL}
@@ -50,7 +50,6 @@ services:
     volumes:
       - ./pom.xml:/app/pom.xml
       - ./src:/app/src
-      - ./target:/app/target
       - ~/.m2:/root/.m2
     ports:
       - "8080:8080"

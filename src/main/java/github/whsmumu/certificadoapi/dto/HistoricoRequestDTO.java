@@ -17,7 +17,8 @@ public record HistoricoRequestDTO(
 
     List<String> acompanhantes,
 
-    List<String> sistemasParaInstalarCertificado,
+    @NotNull(message = "Os sistemas para instalar o certificado são obrigatórios")
+    List<SistemaRequestDTO> sistemasParaInstalarCertificado,
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "A data de instalação é obrigatória")

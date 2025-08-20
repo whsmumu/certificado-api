@@ -13,7 +13,7 @@ public record HistoricoResponseDTO(
 
     String tecnicoResponsavel,
     List<String> acompanhantes,
-    List<String> sistemasParaInstalarCertificado,
+    List<SistemaResponseDTO> sistemasParaInstalarCertificado,
     LocalDate dataInstalacao,
     StatusNotificacao statusInstalacao
 

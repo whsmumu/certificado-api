@@ -31,8 +31,7 @@ public class Historico {
 
     @ElementCollection
     @CollectionTable(name = "historico_sistemas", joinColumns = @JoinColumn(name = "historico_id"))
-    @Column(name = "sistema")
-    private List<String> sistemasParaInstalarCertificado;
+    private List<Sistemas> sistemasParaInstalarCertificado;
 
     @Column(nullable = false)
     private LocalDate dataInstalacao;
