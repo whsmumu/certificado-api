@@ -21,15 +21,14 @@ public class HistoricoValidator {
     }
 
     private void validateDataFutura(Historico historico) {
-        if (historico.getDataInstalacao().isAfter(LocalDate.now()) && historico.getDataInstalacao() != null) {
+        if (historico.getDataInstalacao() != null && historico.getDataInstalacao().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("A data de instalação não pode ser futura.");
         }
     }
 
     private void validateDataAndLojaDuplicate(Historico historico){
         Optional<Historico> historicoExistente = historicoRepository.findByDataInstalacaoAndLoja_Id(historico.getDataInstalacao(), historico.getLoja().getId());
-
-        if (historicoExistente.isPresent()) {
+        if (historicoExistente.isPresent() && !historicoExistente.get().getId().equals(historico.getId())) {
             throw new IllegalArgumentException("Já existe um histórico de instalação para esta loja nesta mesma data.");
         }
     }

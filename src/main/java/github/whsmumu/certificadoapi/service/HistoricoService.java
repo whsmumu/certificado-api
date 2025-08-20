@@ -83,9 +83,7 @@ public class HistoricoService {
         if (sistemasConcluidos) {
             historicoExistente.setStatusInstalacao(StatusNotificacao.CONCLUIDO);
         } else {
-
             historicoExistente.setStatusInstalacao(StatusNotificacao.PENDENTE);
         }
-
     }
 }
