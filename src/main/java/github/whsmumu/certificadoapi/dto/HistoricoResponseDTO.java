@@ -12,10 +12,10 @@ public record HistoricoResponseDTO(
     UUID idLoja,
 
     String tecnicoResponsavel,
-    List<String> acompanhantes,
-    List<SistemaResponseDTO> sistemasParaInstalarCertificado,
     LocalDate dataInstalacao,
-    StatusNotificacao statusInstalacao
+    StatusNotificacao statusInstalacao,
+    List<String> acompanhantes,
+    List<SistemaResponseDTO> sistemasParaInstalarCertificado
 
 
 ) {
