@@ -44,6 +44,9 @@ public class Historico {
     @JoinColumn(name = "loja_id")
     private Loja loja;
 
+    @Column(nullable = false)
+    private LocalDate prazoExpiracaoCertificado;
+
     private UUID idLoja;
 
  

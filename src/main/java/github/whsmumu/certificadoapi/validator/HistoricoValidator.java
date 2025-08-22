@@ -26,10 +26,15 @@ public class HistoricoValidator {
         }
     }
 
-    private void validateDataAndLojaDuplicate(Historico historico){
-        Optional<Historico> historicoExistente = historicoRepository.findByDataInstalacaoAndLoja_Id(historico.getDataInstalacao(), historico.getLoja().getId());
+    private void validateDataAndLojaDuplicate(Historico historico) {
+        Optional<Historico> historicoExistente = historicoRepository
+                .findByDataInstalacaoAndLoja_IdAndPrazoExpiracaoCertificado(
+                        historico.getDataInstalacao(),
+                        historico.getLoja().getId(),
+                        historico.getPrazoExpiracaoCertificado());
+
         if (historicoExistente.isPresent() && !historicoExistente.get().getId().equals(historico.getId())) {
-            throw new IllegalArgumentException("Já existe um histórico de instalação para esta loja nesta mesma data.");
+            throw new IllegalArgumentException("Já existe um histórico de instalação para esta loja nesta data e com o mesmo prazo de expiração.");
         }
     }
 }

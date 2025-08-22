@@ -39,6 +39,10 @@ public class HistoricoService {
         Loja loja = lojaService.findById(historico.getLoja().getId());
         historico.setLoja(loja);
 
+        if (historico.getPrazoExpiracaoCertificado() == null) {
+            historico.setPrazoExpiracaoCertificado(historico.getPrazoExpiracaoCertificado());
+        }
+
         if (historico.getId() != null) {
             Historico historicoExistente = findById(historico.getId());
             updateHistorico(historicoExistente, historico);
@@ -66,6 +70,10 @@ public class HistoricoService {
         historicoExistente.setLoja(historicoDadosNovos.getLoja());
         historicoExistente.setStatusInstalacao(historicoDadosNovos.getStatusInstalacao());
 
+        if (historicoDadosNovos.getPrazoExpiracaoCertificado() != null) {
+            historicoExistente.setPrazoExpiracaoCertificado(historicoDadosNovos.getPrazoExpiracaoCertificado());
+        }
+
         if (historicoExistente.getSistemasParaInstalarCertificado() != null) {
             historicoExistente.getSistemasParaInstalarCertificado().clear();
         }
@@ -85,5 +93,6 @@ public class HistoricoService {
         } else {
             historicoExistente.setStatusInstalacao(StatusNotificacao.PENDENTE);
         }
+
     }
 }

@@ -15,7 +15,8 @@ public record HistoricoResponseDTO(
     LocalDate dataInstalacao,
     StatusNotificacao statusInstalacao,
     List<String> acompanhantes,
-    List<SistemaResponseDTO> sistemasParaInstalarCertificado
+    List<SistemaResponseDTO> sistemasParaInstalarCertificado,
+    LocalDate prazoExpiracaoCertificado
 
 
 ) {

@@ -28,7 +28,11 @@ public record HistoricoRequestDTO(
     StatusNotificacao statusInstalacao,
 
     @NotNull(message = "A loja é obrigatória")
-    UUID idLoja
+    UUID idLoja,
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "O prazo de expiração do certificado é obrigatório")
+    LocalDate prazoExpiracaoCertificado
 
 ) {
 

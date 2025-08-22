@@ -10,9 +10,10 @@ import github.whsmumu.certificadoapi.model.Historico;
 
 public interface HistoricoRepository extends JpaRepository<Historico, UUID> {
 
-    Optional<Historico>  findByDataInstalacaoAndLoja_Id(LocalDate dataInstalacao, UUID lojaId);
-
     Optional<Historico> findByDataInstalacaoAndLoja_IdAndIdNot(LocalDate dataInstalacao, UUID lojaId, UUID id);
 
     Optional<Historico> findByDataInstalacao(LocalDate dataInstalacao);
+
+    Optional<Historico> findByDataInstalacaoAndLoja_IdAndPrazoExpiracaoCertificado(LocalDate dataInstalacao, UUID lojaId, LocalDate prazoExpiracaoCertificado);
+
 }
