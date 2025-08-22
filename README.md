@@ -1,8 +1,6 @@
-# Certificado API
+# Gerenciamento de certificados digitais no varejo
 
-## 📋 Descrição
-
-A **Certificado API** é uma aplicação Spring Boot desenvolvida para gerenciar certificados digitais de lojas. O sistema permite controlar o ciclo de vida dos certificados, incluindo instalação, monitoramento de prazos de expiração e histórico de instalações.
+A **Certificado API** é uma aplicação Spring Boot desenvolvida para gerenciar certificados digitais de lojas no ramo varejo. O sistema permite controlar o ciclo de vida dos certificados, incluindo instalação, monitoramento de prazos de expiração e histórico de instalações.
 
 ## 🚀 Funcionalidades
 
@@ -136,24 +134,6 @@ POST /historicos
 | POST   | `/login`   | Autenticação via LDAP   |
 ---
 
-## 📊 Enumerações
-
-### StatusNotificacao
-- `AGUARDANDO`
-- `ENVIADO`
-- `PENDENTE`
-- `CONCLUIDO`
-- `RECEBIDO`
-- `EM_ANDAMENTO`
-- `FALHA`
-
-### StatusPrazo
-- `NO_PRAZO`
-- `PROXIMO_AO_VENCIMENTO`
-- `EXPIRADO`
-- `CONCLUIDO`
----
-
 ## 🔍 Validações de Negócio
 
 **Lojas**
@@ -181,3 +161,4 @@ A API retorna erros padronizados no formato:
   "detalhesExcecao": "Loja não encontrada com o ID: uuid"
 }
 ```
+
