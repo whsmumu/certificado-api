@@ -1,6 +1,13 @@
 spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/certificadodb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
 
   mvc:
     format:
@@ -9,3 +16,7 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: false
+
+server:
+  address: 0.0.0.0
+  port: 8087

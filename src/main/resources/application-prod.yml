@@ -1,8 +1,0 @@
-spring: 
-  ldap:
-    urls: ${LDAP_URLS}
-    base: ${LDAP_BASE_DN}
-    username: ${LDAP_MANAGER_DN}
-    password: ${LDAP_MANAGER_PASSWORD}
-    user-search-filter: "(&(sAMAccountName={0})(&(objectClass=user)(objectCategory=person)(!(userAccountControl:1.2.840.113556.1.4.803:=2))))"
-    user-search-base: "OU=TI,OU=NovoMix,DC=novomix,DC=local"
